@@ -1,0 +1,49 @@
+body {
+    padding: 10px;
+}
+
+.card-list,
+.deck-list {
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.card-list {
+    height: 70vh;
+}
+
+.deck-list {
+    height: 60vh;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.card-item img {
+    width: 100%;
+    height: auto;
+}
+
+.card-item {
+    text-align: center;
+}
+
+.deck-card img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.deck-counter {
+    margin: 10px;
+}
+
+.tooltip-inner {
+    white-space: pre-wrap;
+    max-width: none;
+}
