@@ -40,6 +40,7 @@
             cardDiv.className = 'card-item';
             cardDiv.innerHTML = `
             <img src="${card.img}" alt="${card.name}" 
+                width="${cardDimensions.width}" height="${cardDimensions.height}"
                 loading="lazy"
                 data-bs-toggle="tooltip" 
                 data-bs-placement="bottom"
@@ -202,7 +203,7 @@
     });
     copyDeckBtn.addEventListener('click', copyDeckToClipboard);
     clearDeckBtn.addEventListener('click', clearDeck);
-    
+
     applyThemeBasedOnPreference();
 
     fetch(configFile)
