@@ -78,7 +78,7 @@
         allCards = Object.keys(cardData).map(cardId => {
             return {
                 name: cardData[cardId].name,
-                img: `${paths.images}${cardData[cardId].image}`,
+                img: useRemoteImages ? cardData[cardId].image : `${paths.images}${cardData[cardId].image}`,
                 number: cardId,
                 description: cardData[cardId].description
             };
@@ -211,6 +211,7 @@
         .then(config => {
             deckSizeLimit = config.deckSizeLimit;
             cardLimitPerDeck = config.cardLimitPerDeck;
+            useRemoteImages = config.useRemoteImages;
             paths = config.paths;
             cardDimensions = config.cardDimensions;
             cardsPerRow = config.cardsPerRow;

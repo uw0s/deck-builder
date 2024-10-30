@@ -1,6 +1,7 @@
 {
     "deckSizeLimit": 21,
     "cardLimitPerDeck": 7,
+    "useRemoteImages": false,
     "paths": {
         "cardJson": "prm/cards.json",
         "images": "prm/img/"
