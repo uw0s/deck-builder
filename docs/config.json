@@ -1,14 +1,6 @@
 {
-    "deckSizeLimit": 21,
-    "cardLimitPerDeck": 7,
-    "useRemoteImages": false,
     "paths": {
         "cardJson": "prm/cards.json",
         "images": "prm/img/"
-    },
-    "cardDimensions": {
-        "width": 367,
-        "height": 512
-    },
-    "cardsPerRow": 7
+    }
 }

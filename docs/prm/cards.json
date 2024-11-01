@@ -1,17 +1,27 @@
 {
-    "000010": {
-        "image": "000010.webp",
-        "name": "Placeholder_0",
-        "description": "<b>Bold<b>"
+    "deckSizeLimit": 21,
+    "cardLimitPerDeck": 7,
+    "useRemoteImages": false,
+    "cardDimensions": {
+        "width": 367,
+        "height": 512
     },
-    "000020": {
-        "image": "000020.webp",
-        "name": "Placeholder_1",
-        "description": "L1\nL2"
-    },
-	"000030": {
-        "image": "000030.webp",
-        "name": "Placeholder_2",
-        "description": "🔴🟢"
+    "cardsPerRow": 7,
+    "cardData": {
+        "000010": {
+            "image": "000010.webp",
+            "name": "Placeholder_0",
+            "description": "<b>Bold<b>"
+        },
+        "000020": {
+            "image": "000020.webp",
+            "name": "Placeholder_1",
+            "description": "L1\nL2"
+        },
+        "000030": {
+            "image": "000030.webp",
+            "name": "Placeholder_2",
+            "description": "🔴🟢"
+        }
     }
 }

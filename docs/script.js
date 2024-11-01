@@ -11,6 +11,7 @@
 
     let deckSizeLimit;
     let cardLimitPerDeck;
+    let useRemoteImages;
     let paths = {};
     let cardDimensions = {};
     let cardsPerRow;
@@ -209,16 +210,18 @@
     fetch(configFile)
         .then(response => response.json())
         .then(config => {
-            deckSizeLimit = config.deckSizeLimit;
-            cardLimitPerDeck = config.cardLimitPerDeck;
-            useRemoteImages = config.useRemoteImages;
             paths = config.paths;
-            cardDimensions = config.cardDimensions;
-            cardsPerRow = config.cardsPerRow;
             fetch(paths.cardJson)
                 .then(response => response.json())
-                .then(cardData => {
-                    loadCardImages(cardData);
+                .then(cardConfig => {
+                    deckSizeLimit = cardConfig.deckSizeLimit;
+                    cardLimitPerDeck = cardConfig.cardLimitPerDeck;
+                    useRemoteImages = cardConfig.useRemoteImages;
+                    cardDimensions = cardConfig.cardDimensions;
+                    cardsPerRow = cardConfig.cardsPerRow;
+                    cardDimensions = cardConfig.cardDimensions;
+                    cardsPerRow = cardConfig.cardsPerRow;
+                    loadCardImages(cardConfig.cardData);
                 });
         });
 })();
