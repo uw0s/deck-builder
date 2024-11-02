@@ -8,6 +8,11 @@
     const saveDeckBtn = document.getElementById('save-deck-btn');
     const searchInput = document.getElementById('search-input');
     const clearDeckBtn = document.getElementById('clear-deck-btn');
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsModal = new bootstrap.Modal(document.getElementById('settings-modal'));
+    const cardsJsonUpload = document.getElementById('cards-json-upload');
+    const errorMessageModal = document.getElementById('error-message-modal');
+    const saveSettingsBtn = document.getElementById('save-settings-btn');
 
     let deckSizeLimit;
     let cardLimitPerDeck;
@@ -18,10 +23,10 @@
     let allCards = [];
     let deck = {};
 
-    function showError(message, timeout) {
-        errorMessage.textContent = message;
+    function showError(message, timeout, errorElement) {
+        errorElement.textContent = message;
         setTimeout(() => {
-            errorMessage.textContent = '';
+            errorElement.textContent = '';
         }, timeout);
     }
 
@@ -90,7 +95,7 @@
     function addCardToDeck(cardName) {
         const deckSize = Object.values(deck).reduce((total, count) => total + count, 0);
         if (deckSize >= deckSizeLimit) {
-            showError('Deck size limit reached!', 1500);
+            showError('Deck size limit reached!', 1500, errorMessage);
             return;
         }
         if (!deck[cardName]) {
@@ -98,7 +103,7 @@
         } else if (deck[cardName] < cardLimitPerDeck) {
             deck[cardName] += 1;
         } else {
-            showError('You can only have up to ' + cardLimitPerDeck + ' copies of each card!', 1500)
+            showError('You can only have up to ' + cardLimitPerDeck + ' copies of each card!', 1500, errorMessage)
             return;
         }
         updateDeck();
@@ -122,7 +127,7 @@
     function saveDeckAsImage() {
         const deckSize = Object.keys(deck).reduce((total, card) => total + deck[card], 0);
         if (deckSize === 0) {
-            showError('No cards in deck to save', 1500);
+            showError('No cards in deck to save', 1500, errorMessage);
             return;
         }
         const cardWidth = cardDimensions.width;
@@ -180,7 +185,7 @@
         const originalIcon = '<i class="bi bi-file-text-fill"></i>';
         const successIcon = '<i class="bi bi-check-lg"></i>';
         if (deckLines.length === 0) {
-            showError('No cards in deck to copy', 1500)
+            showError('No cards in deck to copy', 1500, errorMessage)
             return;
         }
         navigator.clipboard.writeText(deckLines).then(() => {
@@ -193,18 +198,55 @@
         });
     }
 
+    function applyConfig(cardConfig) {
+        deckSizeLimit = cardConfig.deckSizeLimit;
+        cardLimitPerDeck = cardConfig.cardLimitPerDeck;
+        useRemoteImages = cardConfig.useRemoteImages;
+        cardDimensions = cardConfig.cardDimensions;
+        cardsPerRow = cardConfig.cardsPerRow;
+        cardDimensions = cardConfig.cardDimensions;
+        cardsPerRow = cardConfig.cardsPerRow;
+        loadCardImages(cardConfig.cardData);
+    }
+
+    function loadConfigFromFile(file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const cardsJson = JSON.parse(event.target.result);
+                applyConfig(cardsJson)
+                clearDeck();
+            } catch (error) {
+                showError('Invalid JSON file. Please upload a valid cards.json file.', 3000, errorMessageModal);
+            }
+        };
+        reader.onerror = () => {
+            showError('Failed to read file. Please try again.', 3000, errorMessageModal);
+        };
+        reader.readAsText(file);
+    }
+
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
         applyThemeBasedOnPreference();
     });
-    saveDeckBtn.addEventListener('click', function () {
-        saveDeckAsImage();
-    });
+    saveDeckBtn.addEventListener('click', saveDeckAsImage);
     searchInput.addEventListener('input', function (e) {
         renderCards(e.target.value);
     });
     copyDeckBtn.addEventListener('click', copyDeckToClipboard);
     clearDeckBtn.addEventListener('click', clearDeck);
-
+    settingsBtn.addEventListener('click', () => {
+        settingsModal.show();
+    });
+    saveSettingsBtn.addEventListener('click', () => {
+        const file = cardsJsonUpload.files[0];
+        if (file) {
+            loadConfigFromFile(file);
+        }
+        else {
+            showError('No file selected. Please upload a cards.json file.', 3000, errorMessageModal);
+        }
+    });
     applyThemeBasedOnPreference();
 
     fetch(configFile)
@@ -214,14 +256,7 @@
             fetch(paths.cardJson)
                 .then(response => response.json())
                 .then(cardConfig => {
-                    deckSizeLimit = cardConfig.deckSizeLimit;
-                    cardLimitPerDeck = cardConfig.cardLimitPerDeck;
-                    useRemoteImages = cardConfig.useRemoteImages;
-                    cardDimensions = cardConfig.cardDimensions;
-                    cardsPerRow = cardConfig.cardsPerRow;
-                    cardDimensions = cardConfig.cardDimensions;
-                    cardsPerRow = cardConfig.cardsPerRow;
-                    loadCardImages(cardConfig.cardData);
+                    applyConfig(cardConfig)
                 });
         });
 })();

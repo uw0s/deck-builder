@@ -35,6 +35,8 @@
             data-bs-title="Save deck to image"><i class="bi bi-floppy-fill"></i></button>
           <button id="copy-deck-btn" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom"
             data-bs-title="Copy deck to clipboard"><i class="bi bi-file-text-fill"></i></button>
+          <button id="settings-btn" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            data-bs-title="Settings"><i class="bi bi-gear-fill"></i></button>
         </div>
       </div>
     </div>
@@ -45,6 +47,28 @@
         </a>
       </p>
     </footer>
+  </div>
+  <div class="modal fade" id="settings-modal" tabindex="-1" aria-labelledby="settings-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="settings-modal-label">Settings</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="settings-form">
+            <div class="mb-3">
+              <label for="cards-json-upload" class="form-label">Upload config</label>
+              <input type="file" class="form-control" id="cards-json-upload" accept=".json">
+              <span id="error-message-modal" class="text-danger ms-3"></span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="save-settings-btn">Save</button>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
