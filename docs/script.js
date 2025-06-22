@@ -17,6 +17,7 @@
     let deckSizeLimit;
     let cardLimitPerDeck;
     let useRemoteImages;
+    let corsProxy;
     let paths = {};
     let cardDimensions = {};
     let cardsPerRow;
@@ -84,7 +85,7 @@
         allCards = Object.keys(cardData).map(cardId => {
             return {
                 name: cardData[cardId].name,
-                img: useRemoteImages ? cardData[cardId].image : `${paths.images}${cardData[cardId].image}`,
+                img: useRemoteImages ? `${corsProxy}${cardData[cardId].image}` : `${paths.images}${cardData[cardId].image}`,
                 number: cardId,
                 description: cardData[cardId].description
             };
@@ -149,6 +150,7 @@
                 for (let i = 0; i < deck[card.name]; i++) {
                     totalImages++;
                     const cardImage = new Image();
+                    cardImage.crossOrigin = 'anonymous';
                     cardImage.src = card.img;
                     cardImage.onload = function () {
                         ctx.drawImage(cardImage, x, y, cardWidth, cardHeight);
@@ -202,6 +204,7 @@
         deckSizeLimit = cardConfig.deckSizeLimit;
         cardLimitPerDeck = cardConfig.cardLimitPerDeck;
         useRemoteImages = cardConfig.useRemoteImages;
+        corsProxy = cardConfig.corsProxy;
         cardDimensions = cardConfig.cardDimensions;
         cardsPerRow = cardConfig.cardsPerRow;
         cardDimensions = cardConfig.cardDimensions;

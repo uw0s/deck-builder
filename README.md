@@ -15,13 +15,14 @@ The `config.json` file allows you to customize general parameters of the deckbui
 }
 ```
 
-The `cards.json` file is used to customize various parameters of the deckbuilder and map card images to their corresponding names. Each card entry consists of an ID, image filename, the card name and its description. The structure looks like this:
+The `cards.json` file is used to customize various parameters of the deckbuilder and map card images to their corresponding names. Each card entry consists of an ID, image filename, the card name and its description. The structure looks like the following:
 
 ```json
 {
     "deckSizeLimit": 21,
     "cardLimitPerDeck": 7,
     "useRemoteImages": false,
+    "corsProxy": "",
     "cardDimensions": {
         "width": 367,
         "height": 512

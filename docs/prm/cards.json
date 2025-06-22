@@ -2,6 +2,7 @@
     "deckSizeLimit": 21,
     "cardLimitPerDeck": 7,
     "useRemoteImages": false,
+    "corsProxy": "",
     "cardDimensions": {
         "width": 367,
         "height": 512
